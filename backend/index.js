@@ -30,7 +30,7 @@ app.use(
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173","https://studynow-48ql.onrender.com"]
+    origin: "https://studynow-48ql.onrender.com",
     methods: ["GET", "POST"],
     credentials: true,
   },
