@@ -19,18 +19,28 @@ import aiRoutes from "./routes/aiRoutes.js";
 const app = express();
 app.use(express.json());
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://studynow-48ql.onrender.com"
+];
+
 app.use(
   cors({
-    origin: "https://studynow-48ql.onrender.com",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
 
-
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://studynow-48ql.onrender.com",
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
     credentials: true,
   },
